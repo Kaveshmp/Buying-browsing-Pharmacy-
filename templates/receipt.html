@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head><title>Receipt #{{ sale.id }}</title><link rel="stylesheet" href="/static/style.css"></head>
+<body>
+<div class="container" style="max-width: 600px;">
+    <h2>Pharmacy Billing Receipt</h2>
+    <p><strong>Receipt ID:</strong> {{ sale.id }}</p>
+    <p><strong>Date:</strong> {{ sale.sale_date }}</p>
+    <p><strong>Medicine:</strong> {{ sale.medicine_name }}</p>
+    <p><strong>Quantity:</strong> {{ sale.quantity_sold }}</p>
+    <p><strong>Total Amount:</strong> ₹{{ "%.2f"|format(sale.total_amount) }}</p>
+    
+    <button onclick="window.print()" class="btn">Print Receipt</button>
+    <a href="/sales" class="btn">Back to Sales</a>
+</div>
+
+<style>
+@media print {
+    .btn { display: none; }
+    body { font-size: 12pt; }
+}
+</style>
+</body>
+</html>

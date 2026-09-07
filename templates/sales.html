@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head><title>Sales History</title><link rel="stylesheet" href="/static/style.css"></head>
+<body>
+<div class="container">
+    <h1>Sales History</h1>
+    <a href="/" class="btn">Back to Medicines</a>
+    <a href="/sell" class="btn">New Sale</a>
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}<div class="alert">{{ messages[0] }}</div>{% endif %}
+    {% endwith %}
+
+    <input type="text" id="searchSales" placeholder="Search by medicine or date..." onkeyup="searchSalesTable()">
+
+    <table id="salesTable">
+        <tr>
+            <th>ID</th><th>Medicine</th><th>Qty Sold</th><th>Date</th><th>Total (₹)</th>
+        </tr>
+        {% for s in sales %}
+        <tr>
+            <td>{{ s.id }}</td>
+            <td>{{ s.medicine_name }}</td>
+            <td>{{ s.quantity_sold }}</td>
+            <td>{{ s.sale_date }}</td>
+            <td>{{ "%.2f"|format(s.total_amount) }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<script>
+function searchSalesTable() {
+    let input = document.getElementById("searchSales").value.toLowerCase();
+    let rows = document.querySelectorAll("#salesTable tr");
+    for (let i = 1; i < rows.length; i++) {
+        let text = rows[i].textContent.toLowerCase();
+        rows[i].style.display = text.includes(input) ? "" : "none";
+    }
+}
+</script>
+</body>
+</html>

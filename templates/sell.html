@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>New Sale</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="container">
+    <h2>New Sale / Billing</h2>
+    <a href="/sales" class="btn">View Sales</a>
+    <a href="/" class="btn">Back</a>
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}<div class="alert">{{ messages[0] }}</div>{% endif %}
+    {% endwith %}
+
+    <form method="POST">
+        <select name="medicine_id" required>
+            <option value="">Select Medicine</option>
+            {% for med in medicines %}
+            <option value="{{ med.id }}">{{ med.name }} (₹{{ med.price }} - Stock: {{ med.quantity }})</option>
+            {% endfor %}
+        </select>
+        <input type="number" name="quantity_sold" placeholder="Quantity Sold" min="1" required>
+        <input type="date" name="sale_date" value="{{ today }}" required>
+        <button type="submit">Process Sale</button>
+    </form>
+</div>
+</body>
+</html>

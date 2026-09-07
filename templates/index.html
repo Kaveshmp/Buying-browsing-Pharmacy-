@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pharmacy System</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="container">
+    <h1>Pharmacy Management</h1>
+    <a href="/add" class="btn">Add Medicine</a>
+    <a href="/sales" class="btn">View Sales & Billing</a>
+    <a href="/sell" class="btn">New Sale</a>
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}<div class="alert">{{ messages[0] }}</div>{% endif %}
+    {% endwith %}
+
+    <input type="text" id="search" placeholder="Search medicine..." onkeyup="searchTable()">
+
+    <table id="medicineTable">
+        <tr>
+            <th>ID</th><th>Name</th><th>Mfg</th><th>Price</th><th>Qty</th><th>Expiry</th><th>Action</th>
+        </tr>
+        <tbody>
+            {% for med in medicines %}
+            <tr class="{% if med.quantity < 10 %}low-stock{% endif %}">
+                <td>{{ med.id }}</td>
+                <td>{{ med.name }}</td>
+                <td>{{ med.manufacturer }}</td>
+                <td>₹{{ "%.2f"|format(med.price) }}</td>
+                <td>{{ med.quantity }}</td>
+                <td>{{ med.expiry_date }}</td>
+                <td>
+                    <a href="/edit/{{ med.id }}" class="btn-small">Edit</a>
+                    <a href="/delete/{{ med.id }}" class="btn-small delete" 
+                       onclick="return confirm('Delete {{ med.name }}?')">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+function searchTable() {
+    let input = document.getElementById("search").value.toLowerCase();
+    let rows = document.querySelectorAll("#medicineTable tbody tr");
+    rows.forEach(row => {
+        let name = row.cells[1].textContent.toLowerCase();
+        row.style.display = name.includes(input) ? "" : "none";
+    });
+}
+</script>
+</body>
+</html>

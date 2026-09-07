@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head><title>Edit</title><link rel="stylesheet" href="/static/style.css"></head>
+<body>
+<div class="container">
+    <h2>Edit Medicine</h2>
+    <form method="POST">
+        <input name="name" value="{{ medicine.name }}" required>
+        <input name="manufacturer" value="{{ medicine.manufacturer }}" required>
+        <input name="price" type="number" step="0.01" value="{{ medicine.price }}" required>
+        <input name="quantity" type="number" value="{{ medicine.quantity }}" required>
+        <input name="expiry" type="date" value="{{ medicine.expiry_date }}" required>
+        <button>Update</button>
+    </form>
+    <a href="/">Back</a>
+</div>
+</body>
+</html>
