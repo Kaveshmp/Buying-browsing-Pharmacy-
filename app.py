@@ -11,7 +11,7 @@ app.secret_key = 'supersecretkey'
 db_config = {
     'host': 'localhost',
     'user': 'root',
-    'password': 'Kavesh@14',  # CHANGE THIS
+    'password': 'ABC_PLSCHANGETHIS',  # CHANGE THIS
     'database': 'pharmacy_db'
 }
 
