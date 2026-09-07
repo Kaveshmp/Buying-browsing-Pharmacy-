@@ -1,17 +1,21 @@
 # app.py - Updated with Sales & Billing
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 from flask import Flask, render_template, request, redirect, url_for, flash
 import mysql.connector
 from mysql.connector import Error
 from datetime import date
 
 app = Flask(__name__)
-app.secret_key = 'supersecretkey'
+app.secret_key = os.getenv('SECRET_KEY')
 
 # MySQL Config (Update password if needed)
 db_config = {
     'host': 'localhost',
     'user': 'root',
-    'password': 'ABC_PLSCHANGETHIS',  # CHANGE THIS
+    'password': os.getenv('DB_PASSWORD'),  # CHANGE THIS
     'database': 'pharmacy_db'
 }
 
@@ -99,7 +103,7 @@ def sales_list():
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
     cursor.execute("""
-        SELECT s.id, s.quantity_sold, s.sale_date, s.total_amount, m.name as medicine_name, m.price
+        SELECT s.id, s.quantity_sold, s.sale_date, s.total_amount, m.name as medicine_name, m.selling_price 
         FROM sales s JOIN medicines m ON s.medicine_id = m.id
         ORDER BY s.sale_date DESC
     """)
